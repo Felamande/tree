@@ -137,7 +137,8 @@ func (this *pp) printNode(node *Node) {
 		if len(node.Children) == 0 {
 			this.write(fmt.Sprintf("[]"))
 		} else {
-			this.write(fmt.Sprintf("[" + string([]byte{'\n'})))
+			this.write(fmt.Sprintf("["))
+			this.write(fmt.Sprintln())
 			length := len(node.Children)
 			for i, cnode := range node.Children {
 				this.write(fmt.Sprintf("%s", strings.Repeat(deepStr, node.Deep)))
@@ -145,7 +146,8 @@ func (this *pp) printNode(node *Node) {
 				if i <= length-2 {
 					this.write(fmt.Sprintf(commaStr))
 				}
-				this.write(fmt.Sprintf(string([]byte{'\n'})))
+				this.write(fmt.Sprintln())
+
 			}
 			this.write(fmt.Sprintf("%s]", strings.Repeat(deepStr, node.Deep-1)))
 		}
@@ -155,14 +157,15 @@ func (this *pp) printNode(node *Node) {
 		if length == 0 {
 			this.write(fmt.Sprintf("{}(%s)", node.FiledRealType))
 		} else {
-			this.write(fmt.Sprintf("{" + string([]byte{'\n'})))
+			this.write(fmt.Sprintf("{"))
+			this.write(fmt.Sprintln())
 			for i, cnode := range node.Children {
 				this.write(fmt.Sprintf("%s"+green+"%s"+defaultColor+":", strings.Repeat(deepStr, node.Deep), cnode.FieldName))
 				this.printNode(cnode)
 				if i <= length-2 {
 					this.write(fmt.Sprintf(commaStr))
 				}
-				this.write(fmt.Sprintf(string([]byte{'\n'})))
+				this.write(fmt.Sprintln())
 			}
 			this.write(fmt.Sprintf("%s}(%s)", strings.Repeat(deepStr, node.Deep-1), node.FiledRealType))
 		}
