@@ -9,11 +9,11 @@ import (
 var (
 	deepStr      = "  "
 	commaStr     = ","
-	blue         = "\033[32;1m"
-	red          = "\033[31;1m"
-	yellow       = "\033[33;1m"
-	green        = "\033[34;1m"
-	defaultColor = "\033[0m"
+	blue         = ""
+	red          = ""
+	yellow       = ""
+	green        = ""
+	defaultColor = ""
 )
 
 type Node struct {
@@ -137,7 +137,7 @@ func (this *pp) printNode(node *Node) {
 		if len(node.Children) == 0 {
 			this.write(fmt.Sprintf("[]"))
 		} else {
-			this.write(fmt.Sprintf("[\n"))
+			this.write(fmt.Sprintf("[" + string([]byte{'\n'})))
 			length := len(node.Children)
 			for i, cnode := range node.Children {
 				this.write(fmt.Sprintf("%s", strings.Repeat(deepStr, node.Deep)))
@@ -145,7 +145,7 @@ func (this *pp) printNode(node *Node) {
 				if i <= length-2 {
 					this.write(fmt.Sprintf(commaStr))
 				}
-				this.write(fmt.Sprintf("\n"))
+				this.write(fmt.Sprintf(string([]byte{'\n'})))
 			}
 			this.write(fmt.Sprintf("%s]", strings.Repeat(deepStr, node.Deep-1)))
 		}
@@ -155,14 +155,14 @@ func (this *pp) printNode(node *Node) {
 		if length == 0 {
 			this.write(fmt.Sprintf("{}(%s)", node.FiledRealType))
 		} else {
-			this.write(fmt.Sprintf("{\n"))
+			this.write(fmt.Sprintf("{" + string([]byte{'\n'})))
 			for i, cnode := range node.Children {
 				this.write(fmt.Sprintf("%s"+green+"%s"+defaultColor+":", strings.Repeat(deepStr, node.Deep), cnode.FieldName))
 				this.printNode(cnode)
 				if i <= length-2 {
 					this.write(fmt.Sprintf(commaStr))
 				}
-				this.write(fmt.Sprintf("\n"))
+				this.write(fmt.Sprintf(string([]byte{'\n'})))
 			}
 			this.write(fmt.Sprintf("%s}(%s)", strings.Repeat(deepStr, node.Deep-1), node.FiledRealType))
 		}
